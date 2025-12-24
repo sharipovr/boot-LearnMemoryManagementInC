@@ -1,0 +1,1 @@
+Learn how to manually manage memory in C and build a garbage collector from scratch.
