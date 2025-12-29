@@ -1,2 +1,3 @@
 *.out
-munit/
+CH1_Basics/munit/
+CH2_Structs/munit/
