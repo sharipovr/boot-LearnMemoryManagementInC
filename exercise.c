@@ -1,10 +1,6 @@
-#include "exercise.h"
-
-int can_access_registry(int is_premium, int reputation, int has_2fa) {
-
-  if (is_premium == 1 || (reputation >= 100 && has_2fa == 1)) {
-    return 1;
+#include <stdio.h>
+void print_numbers(int start, int end) {
+  for (int i = start; i <= end; i++) {
+    printf("%d\n",i);
   }
-
-  return 0;
 }
