@@ -3,10 +3,10 @@
 
 void test(int start, int end){
   printf("Printing from %d to %d:\n", start, end);
-  print_numbers(start, end);
+  print_numbers_reverse(start, end);
   printf("======================\n");
 }
 
 int main() {
-  test(42, 69);
+  test(20, 4);
 }
