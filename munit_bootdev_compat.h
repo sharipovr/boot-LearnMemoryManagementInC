@@ -13,6 +13,8 @@
 #ifndef MUNIT_BOOTDEV_COMPAT_H
 #define MUNIT_BOOTDEV_COMPAT_H
 
+#include <string.h>
+
 /* Include upstream µnit once, then prevent main.c from re-including it. */
 #include "munit/munit.h"
 
@@ -45,6 +47,22 @@
 #define munit_suite(_name_ignored, _tests)                                        \
   ((MunitSuite) { (char*) "", (_tests), NULL, 1, MUNIT_SUITE_OPTION_NONE })
 #endif
+
+/*
+ * main.c calls munit_assert_string_equal(result, expected, "message").
+ * Upstream µnit only takes 2 arguments. We override it to accept a message.
+ */
+#ifdef munit_assert_string_equal
+#undef munit_assert_string_equal
+#endif
+#define munit_assert_string_equal(_a, _b, _msg)                                   \
+  do {                                                                            \
+    const char* munit_tmp_a_ = (const char*) (_a);                                \
+    const char* munit_tmp_b_ = (const char*) (_b);                                \
+    if (MUNIT_UNLIKELY(strcmp(munit_tmp_a_, munit_tmp_b_) != 0)) {                \
+      munit_errorf("%s (%s != %s)", (_msg), munit_tmp_a_, munit_tmp_b_);          \
+    }                                                                             \
+  } while (0)
 
 /*
  * main.c calls munit_assert_double_equal(result, expected, "message").
