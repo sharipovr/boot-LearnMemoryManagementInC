@@ -65,6 +65,22 @@
   } while (0)
 
 /*
+ * main.c calls munit_assert_int(a, op, b, "message").
+ * Upstream µnit only takes 3 arguments. We override it to accept a message.
+ */
+#ifdef munit_assert_int
+#undef munit_assert_int
+#endif
+#define munit_assert_int(_a, _op, _b, _msg)                                       \
+  do {                                                                            \
+    const int munit_tmp_a_ = (int) (_a);                                          \
+    const int munit_tmp_b_ = (int) (_b);                                          \
+    if (MUNIT_UNLIKELY(!(munit_tmp_a_ _op munit_tmp_b_))) {                       \
+      munit_errorf("%s (%d %s %d)", (_msg), munit_tmp_a_, #_op, munit_tmp_b_);    \
+    }                                                                             \
+  } while (0)
+
+/*
  * main.c calls munit_assert_double_equal(result, expected, "message").
  * Upstream µnit expects the 3rd argument to be an INTEGER precision.
  * We override it with a message-based variant using a fixed tolerance.

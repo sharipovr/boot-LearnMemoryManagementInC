@@ -1,14 +1,10 @@
 #include "exercise.h"
 
-char *get_temperature_status(int temp)
-{
-  char *result;
-  if (temp < 70) {
-    result = "too cold";
-  } else if (temp > 90) {
-    result = "too hot";
-  } else {
-    result = "just right";
+int can_access_registry(int is_premium, int reputation, int has_2fa) {
+
+  if (is_premium == 1 || (reputation >= 100 && has_2fa == 1)) {
+    return 1;
   }
-  return result;
+
+  return 0;
 }
