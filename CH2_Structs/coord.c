@@ -1,0 +1,11 @@
+#include "coord.h"
+
+struct Coordinate new_coord(int x, int y, int z) {
+  struct Coordinate res = {
+    .x = x,
+    .y = y,
+    .z = z
+  };
+   
+  return res;
+}
